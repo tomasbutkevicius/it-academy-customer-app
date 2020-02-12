@@ -1,7 +1,20 @@
 package com.enorkus.academy.validation;
 
-import com.enorkus.academy.entity.Customer;
+import java.security.InvalidParameterException;
+import java.text.MessageFormat;
+import java.util.Properties;
 
-public interface Validator {
-    boolean validateUserInformation(String firstName, String lastName, String personalNumber);
+public class Validator extends Exception {
+    public String getProperty(final String key) {
+        if(key == null || key.isEmpty()) {
+            throw new NullPointerException("Missing value in form");
+           // throw new InvalidParameterException(MessageFormat.format("Missing value in form ", key));
+        }
+        return key;
+    }
+
+   // public String getProperty(final String key, final String defaultValue) {
+        // Throw exception here as above if you want to throw exception even with defaultValue
+  //      return super.getProperty(key, defaultValue);
+   // }
 }

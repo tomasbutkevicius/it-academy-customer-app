@@ -3,16 +3,13 @@ package com.enorkus.academy.service;
 import com.enorkus.academy.entity.Customer;
 import com.enorkus.academy.repository.CustomerRepository;
 import com.enorkus.academy.repository.MemoryCustomerRepository;
-import com.enorkus.academy.validation.PersonValidator;
-import org.springframework.web.bind.annotation.*;
+import com.enorkus.academy.validation.Validator;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class CustomerService {
     private Customer.CustomerBuilder customer;
     private CustomerRepository customerRepository;
-    private PersonValidator personValidator;
 
     public CustomerService() {
         this.customerRepository = new MemoryCustomerRepository();
@@ -39,21 +36,16 @@ public class CustomerService {
     }
 
     public void insertCustomer(Customer customer) {
+        Validator validate = new Validator();
 
-        String capitalizedFirstName = "";
-        if(!customer.getFirstName().isEmpty()){
+        String capitalizedFirstName = validate.getProperty(customer.getFirstName());
             capitalizedFirstName = capitalizeName(customer.getFirstName());
-        }
 
-        String capitalizedLastName = "";
-        if(!customer.getLastName().isEmpty()){
+        String capitalizedLastName = validate.getProperty(customer.getLastName());;
             capitalizedLastName = capitalizeName(customer.getLastName());
-        }
 
-        String formattedPersonalNumber = customer.getPersonalNumber();
-        if(customer.getPersonalNumber().length()>4) {
+        String formattedPersonalNumber = validate.getProperty(customer.getPersonalNumber());
               formattedPersonalNumber = formatPersonalNumber(customer);
-        }
 
         Customer.CustomerBuilder newestCustomer = new Customer.CustomerBuilder(capitalizedFirstName, capitalizedLastName, formattedPersonalNumber)
                 .withMiddleName(customer.getMiddleName())
