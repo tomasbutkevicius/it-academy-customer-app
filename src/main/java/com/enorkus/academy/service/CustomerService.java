@@ -3,7 +3,7 @@ package com.enorkus.academy.service;
 import com.enorkus.academy.entity.Customer;
 import com.enorkus.academy.repository.CustomerRepository;
 import com.enorkus.academy.repository.MemoryCustomerRepository;
-import com.enorkus.academy.validation.Validator;
+import com.enorkus.academy.validation.*;
 
 import java.util.List;
 
@@ -36,20 +36,25 @@ public class CustomerService {
     }
 
     public void insertCustomer(Customer customer) {
-        Validator validate = new Validator();
+        Validator validateFirstName = new FirstNameValidator();
+        Validator validateLastName = new LastNameValidator();
+        Validator validatePersonalNumber = new PersonalNumberValidator();
+        Validator validateAge = new AgeValidator();
+        validateAge.getProperty(customer.getAge());
 
-        String capitalizedFirstName = validate.getProperty(customer.getFirstName());
+        String capitalizedFirstName = (String) validateFirstName.getProperty(customer.getFirstName());
             capitalizedFirstName = capitalizeName(customer.getFirstName());
 
-        String capitalizedLastName = validate.getProperty(customer.getLastName());;
+        String capitalizedLastName = (String) validateLastName.getProperty(customer.getLastName());;
             capitalizedLastName = capitalizeName(customer.getLastName());
 
-        String formattedPersonalNumber = validate.getProperty(customer.getPersonalNumber());
+        String formattedPersonalNumber = (String) validatePersonalNumber.getProperty(customer.getPersonalNumber());
+
               formattedPersonalNumber = formatPersonalNumber(customer);
 
-        Customer.CustomerBuilder newestCustomer = new Customer.CustomerBuilder(capitalizedFirstName, capitalizedLastName, formattedPersonalNumber)
+
+        Customer.CustomerBuilder newestCustomer = new Customer.CustomerBuilder(capitalizedFirstName, capitalizedLastName, formattedPersonalNumber, customer.getAge())
                 .withMiddleName(customer.getMiddleName())
-                .withAge(customer.getAge())
                 .withCountryCode(customer.getCountryCode())
                 .withCity(customer.getCity())
                 .withMonthlyIncome(customer.getMonthlyIncome())

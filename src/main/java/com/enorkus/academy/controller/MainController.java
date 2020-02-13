@@ -6,6 +6,8 @@ import com.enorkus.academy.repository.MemoryCustomerRepository;
 import com.enorkus.academy.service.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -32,4 +34,49 @@ public class MainController {
     public void deleteCustomer(@PathVariable String customerId) {
         customerService.deleteCustomer(customerId);
     }
+
+    @RequestMapping("/cars")
+    public List<Car> getCars(){
+        List<Car> cars = new ArrayList<>();
+       cars.add(new Car("Audi", 100, "red", false, Arrays.asList("Deluxe")));
+        cars.add(new Car("Porsche", 44, "red", true, Arrays.asList("Nice")));
+
+        return cars;
+    }
+    public class Car{
+        private String model;
+        private int speed;
+        private String color;
+        private Boolean isFast;
+        private List<String> modification;
+
+        public Car(String model, int speed, String color, Boolean isFast, List<String> modification) {
+            this.model = model;
+            this.speed = speed;
+            this.color = color;
+            this.isFast = isFast;
+            this.modification = modification;
+        }
+
+        public String getModel() {
+            return model;
+        }
+
+        public int getSpeed() {
+            return speed;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+        public Boolean getFast() {
+            return isFast;
+        }
+
+        public List<String> getModification() {
+            return modification;
+        }
+    }
+
 }

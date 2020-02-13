@@ -21,19 +21,15 @@ public class Customer {
         private String gender;
         private String maritalStatus;
 
-        public CustomerBuilder(String firstName, String lastName, String personalNumber) {
+        public CustomerBuilder(String firstName, String lastName, String personalNumber, int age) {
             this.firstName = firstName;
             this.lastName = lastName;
             this.personalNumber = personalNumber;
+            this.age = age;
         }
 
         public CustomerBuilder withMiddleName(String middleName) {
             this.middleName = middleName;
-            return this;
-        }
-
-        public CustomerBuilder withAge(int age) {
-            this.age = age;
             return this;
         }
 
