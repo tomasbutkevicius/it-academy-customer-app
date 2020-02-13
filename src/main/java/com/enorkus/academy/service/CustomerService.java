@@ -36,21 +36,17 @@ public class CustomerService {
     }
 
     public void insertCustomer(Customer customer) {
-        Validator validateFirstName = new FirstNameValidator();
-        Validator validateLastName = new LastNameValidator();
-        Validator validatePersonalNumber = new PersonalNumberValidator();
-        Validator validateAge = new AgeValidator();
-        validateAge.getProperty(customer.getAge());
 
-        String capitalizedFirstName = (String) validateFirstName.getProperty(customer.getFirstName());
-            capitalizedFirstName = capitalizeName(customer.getFirstName());
 
-        String capitalizedLastName = (String) validateLastName.getProperty(customer.getLastName());;
-            capitalizedLastName = capitalizeName(customer.getLastName());
+        CustomerValidator customerValidator = new CustomerValidator();
+        customerValidator.validateCustomer(customer);
 
-        String formattedPersonalNumber = (String) validatePersonalNumber.getProperty(customer.getPersonalNumber());
 
-              formattedPersonalNumber = formatPersonalNumber(customer);
+        String capitalizedFirstName = capitalizeName(customer.getFirstName());
+
+        String capitalizedLastName = capitalizeName(customer.getLastName());
+
+        String formattedPersonalNumber = formatPersonalNumber(customer);
 
 
         Customer.CustomerBuilder newestCustomer = new Customer.CustomerBuilder(capitalizedFirstName, capitalizedLastName, formattedPersonalNumber, customer.getAge())

@@ -7,5 +7,5 @@ import java.text.MessageFormat;
 import java.util.Properties;
 
 public interface Validator<T>{
-    T getProperty(T key);
+    T getProperty(T Object, String key);
 }
