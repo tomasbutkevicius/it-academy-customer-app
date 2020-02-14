@@ -46,7 +46,9 @@ public class CustomerService {
 
         String capitalizedLastName = capitalizeName(customer.getLastName());
 
-        String formattedPersonalNumber = formatPersonalNumber(customer);
+        String formattedPersonalNumber = customer.getPersonalNumber();
+        if(customer.getPersonalNumber().length() > 4)
+            formattedPersonalNumber = formatPersonalNumber(customer);
 
 
         Customer.CustomerBuilder newestCustomer = new Customer.CustomerBuilder(capitalizedFirstName, capitalizedLastName, formattedPersonalNumber, customer.getAge())

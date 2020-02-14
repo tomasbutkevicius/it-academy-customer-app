@@ -1,14 +1,11 @@
 package com.enorkus.academy.validation;
 
 import com.enorkus.academy.entity.Customer;
-import com.enorkus.academy.exception.CustomerNotAdultException;
-import com.enorkus.academy.exception.InvalidCountryCodeException;
-import com.enorkus.academy.exception.MandatoryValueMissingException;
 import com.enorkus.academy.types.CountryCode;
 import org.apache.commons.lang3.EnumUtils;
 
 public class CustomerValidator {
-
+    private Validator validator;
 
     public void validateCustomer(Customer customer){
         validateMandatoryValues(customer.getFirstName(),customer.getLastName(),customer.getPersonalNumber());
@@ -20,26 +17,24 @@ public class CustomerValidator {
 
 
     private void validateMandatoryValues(String firstName, String lastName, String personalNumber){
-        if (firstName == null || firstName.isEmpty()) {
-        throw new MandatoryValueMissingException("First name is mandatory!");
-    } else if (lastName == null || lastName.isEmpty()) {
-        throw new MandatoryValueMissingException("Last name is mandatory!");
-    }else if (personalNumber == null || personalNumber.isEmpty()) {
-        throw new MandatoryValueMissingException("Personal number is mandatory!");
-    }}
+        validator = new MandatoryValueValidator();
+
+        validator.validate(firstName,"First name is mandatory!");
+
+        validator.validate(lastName,"Last name is mandatory!");
+
+        validator.validate(personalNumber,"Personal number is mandatory!");
+    }
 
 
     private void validateAge(int age){
-        if (age < 18) {
-            throw new CustomerNotAdultException("Customer must be 18 or older!");
-        }
+        validator = new CustomerAdultValidator();
+        validator.validate(age, "Customer must be 18 or older!");
     }
 
 
     private void validateCountryCode(String countryCode){
-        if( !EnumUtils.isValidEnum(CountryCode.class, countryCode.toUpperCase()) ){
-            throw new InvalidCountryCodeException("Invalid country code!");
-        }
+        validator = new CountryCodeValidator();
+        validator.validate(countryCode,  "Invalid country code!");
     }
-    private void validateMandatoryValue(){}
 }

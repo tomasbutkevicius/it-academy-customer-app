@@ -1,11 +1,5 @@
 package com.enorkus.academy.validation;
 
-import com.enorkus.academy.exception.MandatoryValueMissingException;
-
-import java.security.InvalidParameterException;
-import java.text.MessageFormat;
-import java.util.Properties;
-
-public interface Validator<T>{
-    T getProperty(T Object, String key);
+public abstract class Validator<T>{
+    public abstract void validate(T Attribute, String message);
 }
